@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport"
+    content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+  <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+  <title>index</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+  </style>
+</head>
+
+<body>
+</body>
+
+</html>
+<script type="text/javascript">
+  var url = './home.html'   // You can change the main entry in 'production' ENV
+  if ('<%= htmlWebpackPlugin.options.env %>' === 'development') {
+    url = 'http://192.168.10.27:8080/home.html' // You can change the main entry in 'development' ENV
+  }
+
+  apiready = function () {
+    api.openFrame({
+      name: 'home',
+      url: url,
+      rect: {
+        x: 0,
+        y: 0,
+        w: api.winWidth,
+        h: api.winHeight
+      },
+      progress: {
+        type: "default", //加载进度效果类型，默认值为 default，取值范围为 default|page，为 page 时，进度效果为仿浏览器类型，固定在页面的顶部
+        title: "2229999", //type 为 default 时显示的加载框标题，字符串类型
+        text: "8888", //type 为 default 时显示的加载框内容，字符串类型
+        color: "red", //type 为 page 时进度条的颜色，默认值为 #45C01A，支持#FFF，#FFFFFF，rgb(255,255,255)，rgba(255,255,255,1.0)等格式
+        height: 10 //type 为 page 时进度条高度，默认值为3，数字类型
+      }
+    })
+  }
+</script>
