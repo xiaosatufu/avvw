@@ -1,8 +1,6 @@
 <template>
   <div>
-    <Header>
-      
-    </Header>
+    <Header></Header>
     <Footer @changeTab="handleChangeTab"></Footer>
     <!-- <Tabbar
       v-model="tabActive"
@@ -56,17 +54,20 @@ window.homeVue = {
     // But if u wanna a smooth coding feeling, just use the vue router and the v-tap
     this.headerHeight = apicloud.dom("#header").offsetHeight;
 
-
     let footerHeight = apicloud.dom("#tabbar").offsetHeight;
 
     this.frameHeight = this.$ac.winHeight - this.headerHeight - footerHeight;
 
+    window.localStorage.setItem(
+      "view",
+      JSON.stringify({
+        headerHeight: this.headerHeight,
+        frameHeight: this.frameHeight
+      })
+    );
 
-    window.localStorage.setItem('view',JSON.stringify({headerHeight:this.headerHeight,frameHeight:this.frameHeight}))
-
-
-    alert('home' + window.localStorage.getItem('view'))
-    this.handleChangeTab(0)
+    alert("home" + window.localStorage.getItem("view"));
+    this.handleChangeTab(0);
   },
   methods: {
     handleChangeTab(tabActive) {
@@ -94,6 +95,7 @@ window.homeVue = {
           w: "auto",
           h: this.frameHeight
         },
+        reload: true,
         progress: {
           type: "default", //加载进度效果类型，默认值为 default，取值范围为 default|page，为 page 时，进度效果为仿浏览器类型，固定在页面的顶部
           title: "2229999", //type 为 default 时显示的加载框标题，字符串类型
@@ -109,8 +111,10 @@ window.homeVue = {
 export default window.homeVue;
 </script>
 
-<style scoped>
-/* #tabbar {
-  position: fixed;
-} */
+<style scoped lang="scss">
+
+
+
+
+
 </style>

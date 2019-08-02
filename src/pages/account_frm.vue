@@ -1,43 +1,46 @@
 <template>
   <div>
-    <header class="header" id="loginStatus" tapmode @click="fnOpenWin('account_personal_data')">
-      <div class="header_left">
-        <img src="@/images/icon_avatar.png" alt />
-        <div class="header_left_main">
-          <div class="person_name">MobieUser</div>
-          <div class="person_number">ID:{{}}</div>
+    <template v-if="account.token && account.uid">
+      <header class="header" id="loginStatus" tapmode @click="fnOpenWin('account_personal_data')">
+        <div class="header_left">
+          <img src="@/images/icon_avatar.png" alt />
+          <div class="header_left_main">
+            <div class="person_name">MobieUser</div>
+            <div class="person_number">ID:{{account.mobile}}</div>
+          </div>
+        </div>
+        <div class="header_right">
+          <img src="@/images/icon_arrowhead_right_gray.png" alt />
+        </div>
+      </header>
+      <div class="main">
+        <p>请勿透露密码、短信验证码给任何人，包括易挖工作人员。</p>
+      </div>
+      <div id="footer" class="footer" @click="fnOpenWin('account_security')">
+        <div class="item">
+          <div class="footer-shield">
+            <img src="@/images/icon_shield.png" alt />
+          </div>
+          <div class="footer-security">账户安全</div>
+        </div>
+        <div class="footer-right">
+          <img src="@/images/icon_arrowhead_right_gray.png" alt />
         </div>
       </div>
-      <div class="header_right">
-        <img src="@/images/icon_arrowhead_right_gray.png" alt />
-      </div>
-    </header>
-    <div class="main">
-      <p>请勿透露密码、短信验证码给任何人，包括易挖工作人员。</p>
-    </div>
-    <div id="footer" class="footer" @click="fnOpenWin('account_security')">
-      <div class="item">
-        <div class="footer-shield">
-          <img src="@/images/icon_shield.png" alt />
+      <div style="width: 100%;height:10px;background-color:#F8F8F8;"></div>
+    </template>
+    <template v-else>
+      <header class="not-login header" id="unloginStatus">
+        <div class="header_left">
+          <div class="u-tt">欢迎来到易挖</div>
+          <p>挖掘数字金矿 易享未来财富</p>
         </div>
-        <div class="footer-security">账户安全</div>
+        <div class="header_right" @click="fnOpenWin('login_account')">登录/注册</div>
+      </header>
+      <div class="main">
+        <p>请勿透露密码、短信验证码给任何人，包括易挖工作人员。</p>
       </div>
-      <div class="footer-right">
-        <img src="@/images/icon_arrowhead_right_gray.png" alt />
-      </div>
-    </div>
-    <div style="width: 100%;height:10px;background-color:#F8F8F8;"></div>
-
-    <header class="not-login header" id="unloginStatus">
-      <div class="header_left">
-        <div class="u-tt">欢迎来到易挖</div>
-        <p>挖掘数字金矿 易享未来财富</p>
-      </div>
-      <div class="header_right" @click="fnOpenWin('login_account')">登录/注册</div>
-    </header>
-    <div class="main">
-      <p>请勿透露密码、短信验证码给任何人，包括易挖工作人员。</p>
-    </div>
+    </template>
   </div>
 </template>
 
@@ -46,7 +49,36 @@ window.account_frmVue = {
   name: "account_frm",
   components: {},
   data() {
-    return {};
+    return {
+      account: {}
+    };
+  },
+  mounted() {
+    api.addEventListener(
+      {
+        name: "loginout"
+      },
+      function(ret, err) {
+        window.location.reload();
+      }
+    );
+    api.addEventListener(
+      {
+        name: "login"
+      },
+      function(ret, err) {
+        window.location.reload();
+      }
+    );
+    api.addEventListener(
+      {
+        name: "changePwd"
+      },
+      function(ret, err) {
+        window.location.reload();
+      }
+    );
+    this.account = JSON.parse(window.localStorage.getItem("account"));
   },
   methods: {
     fnOpenWin(name) {
